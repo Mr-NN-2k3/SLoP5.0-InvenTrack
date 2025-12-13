@@ -36,19 +36,21 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   // Helper to show the date picker
   Future<void> _selectExpiryDate() async {
-    final DateTime? pickedDate = await showDatePicker(
+    final now = DateTime.now();
+    final tomorrow = now.add(const Duration(days: 1));
+
+    final pickedDate = await showDatePicker(
       context: context,
-      initialDate: _selectedExpiryDate ?? DateTime.now().add(const Duration(days: 7)),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
+      initialDate: _selectedExpiryDate ?? now.add(const Duration(days: 7)),
+      firstDate: tomorrow,
+      lastDate: now.add(const Duration(days: 365 * 5)),
     );
 
-    if (pickedDate != null) {
-      setState(() {
-        _selectedExpiryDate = pickedDate;
-      });
-    }
+    if (pickedDate == null) return;
+
+    setState(() => _selectedExpiryDate = pickedDate);
   }
+
 
   // Pick image from gallery
   Future<void> _pickImage() async {
