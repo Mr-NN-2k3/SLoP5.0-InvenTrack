@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,8 +36,10 @@ class _SplashScreenState extends State<SplashScreen>
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 800),
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                FadeTransition(opacity: animation, child: const HomeScreen()),
+            pageBuilder: (_, animation, __) => FadeTransition(
+              opacity: animation,
+              child: const HomeScreen(),
+            ),
           ),
         );
       }
@@ -54,58 +55,37 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 109, 216, 136), // light green
-              Color.fromARGB(255, 29, 165, 86), // dark green
-            ],
-          ),
-        ),
+      backgroundColor: const Color.fromARGB(255, 204, 203, 195), // use your brand color
+      body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Image.asset(
-                    'assets/images/logo1.png',
-                    fit: BoxFit.contain,
-                  ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/logo.png',
+                width: 250,
+                height: 250, // perfect splash size
+              ),
+              const Text(
+                'Smarter Grocery Management',
+                style: TextStyle(
+                  color: Color.fromARGB(179, 9, 110, 50),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1.1,
                 ),
-                const SizedBox(height: 18),
-                Transform.translate(
-                  offset: const Offset(0, -10),
-                  child: const Text(
-                    'Smarter Grocery Management',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
+              ),
+              const SizedBox(height: 26),
+              const SizedBox(
+                width: 18,
+                height: 18,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
-
-                const SizedBox(height: 28),
-
-                // Loading indicator
-                const SizedBox(
-                  width: 22,
-                  height: 22,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
